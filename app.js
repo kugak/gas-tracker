@@ -13,6 +13,11 @@ app.engine(
 );
 app.set('view engine', 'handlebars');
 
+// index route
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
 const port = 5000;
 
 app.listen(port, () => {
