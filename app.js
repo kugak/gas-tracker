@@ -1,5 +1,7 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+var Handlebars = require('handlebars');
+var MomentHandler = require('handlebars.moment');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
@@ -30,6 +32,9 @@ app.engine(
   })
 );
 app.set('view engine', 'handlebars');
+
+// moment format
+MomentHandler.registerHelpers(Handlebars); // <- this is the important line
 
 // body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
