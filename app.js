@@ -2,6 +2,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 var Handlebars = require('handlebars');
 var MomentHandler = require('handlebars.moment');
+var helpers = require('handlebars-helpers');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
@@ -32,6 +33,9 @@ app.engine(
   })
 );
 app.set('view engine', 'handlebars');
+
+// handlebars-helper middleware
+var helpers = require('handlebars-helpers')();
 
 // moment format
 MomentHandler.registerHelpers(Handlebars); // <- this is the important line
