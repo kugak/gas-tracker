@@ -37,7 +37,11 @@ app.use(bodyParser.json());
 
 // index route
 app.get('/', (req, res) => {
-  res.render('index');
+  Tracker.find({})
+    .sort({ date: 'desc' })
+    .then(records => {
+      res.render('index', { records: records });
+    });
 });
 
 // process form
