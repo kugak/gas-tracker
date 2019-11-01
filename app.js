@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 // initialize
@@ -30,9 +31,39 @@ app.engine(
 );
 app.set('view engine', 'handlebars');
 
+// body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 // index route
 app.get('/', (req, res) => {
   res.render('index');
+});
+
+// process form
+app.post('/', (req, res) => {
+  console.log(req.body);
+  let errors = [];
+
+  if (errors.length > 0) {
+    res.render('/', {
+      errors: errors,
+      litres: req.body.litres,
+      amount: req.body.amount,
+      endkm: req.body.endkm,
+      date: req.body.date
+    });
+  } else {
+    const newRecord = {
+      litres: req.body.litres,
+      amount: req.body.amount,
+      endkm: req.body.endkm,
+      date: req.body.date
+    };
+    new Tracker(newRecord).save().then(record => {
+      res.redirect('/');
+    });
+  }
 });
 
 const port = 5000;
